@@ -4002,5 +4002,213 @@
             resetLabels([layer_ubs_7]);
         });
         </script>        
+<!-- =====================================================
+     COLE ESTE TRECHO NO SEU index_.html ANTES DO </body>
+     ===================================================== -->
+
+<style>
+  #painel-pontos {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #painel-pontos .btns-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-ponto {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    font-family: sans-serif;
+    white-space: nowrap;
+  }
+
+  .btn-ponto:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
+
+  .btn-ponto.ativo {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+    opacity: 1 !important;
+  }
+
+  .btn-ponto:not(.ativo) { opacity: 0.85; }
+
+  #btn-dengue   { background: #F5A623; color: #fff; }
+  #btn-enchente { background: #1A35E8; color: #fff; }
+
+  #btn-baixar {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-family: sans-serif;
+    display: none;
+  }
+  #btn-baixar:hover { background: #f5f5f5; }
+
+  #msg-modo {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-family: sans-serif;
+    display: none;
+    pointer-events: none;
+  }
+
+  /* cursor crosshair quando modo ativo */
+  body.modo-ativo #map { cursor: crosshair !important; }
+</style>
+
+<div id="painel-pontos">
+  <div id="msg-modo">Clique no mapa para adicionar o ponto</div>
+  <div class="btns-row">
+    <button class="btn-ponto" id="btn-dengue"   onclick="ativarModo('dengue')">🦟 Suscetibilidade a Dengue</button>
+    <button class="btn-ponto" id="btn-enchente" onclick="ativarModo('enchente')">🌊 Suscetibilidade a Enchentes</button>
+  </div>
+  <button id="btn-baixar" onclick="baixarGeoJSON()">⬇ Baixar pontos (GeoJSON)</button>
+</div>
+
+<script>
+(function() {
+  // aguarda o mapa Leaflet estar disponível
+  function init() {
+    // tenta pegar o mapa Leaflet (qgis2web expõe como variável global 'map')
+    var m = window.map;
+    if (!m) {
+      setTimeout(init, 500);
+      return;
+    }
+
+    var modoAtivo = null;
+    var pontos = [];
+
+    var icones = {
+      dengue: L.divIcon({
+        html: '<div style="background:#F5A623;width:18px;height:18px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+        className: ''
+      }),
+      enchente: L.divIcon({
+        html: '<div style="background:#1A35E8;width:18px;height:18px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+        className: ''
+      })
+    };
+
+    window.ativarModo = function(tipo) {
+      if (modoAtivo === tipo) {
+        // desativa
+        modoAtivo = null;
+        document.body.classList.remove('modo-ativo');
+        document.getElementById('msg-modo').style.display = 'none';
+        document.getElementById('btn-dengue').classList.remove('ativo');
+        document.getElementById('btn-enchente').classList.remove('ativo');
+      } else {
+        modoAtivo = tipo;
+        document.body.classList.add('modo-ativo');
+        document.getElementById('msg-modo').style.display = 'block';
+        document.getElementById('btn-dengue').classList.toggle('ativo', tipo === 'dengue');
+        document.getElementById('btn-enchente').classList.toggle('ativo', tipo === 'enchente');
+      }
+    };
+
+    m.on('click', function(e) {
+      if (!modoAtivo) return;
+
+      var label = modoAtivo === 'dengue'
+        ? 'Suscetibilidade a Dengue'
+        : 'Suscetibilidade a Enchentes';
+
+      var marker = L.marker([e.latlng.lat, e.latlng.lng], {
+        icon: icones[modoAtivo]
+      }).addTo(m);
+
+      marker.bindPopup(
+        '<strong>' + label + '</strong><br>' +
+        'Lat: ' + e.latlng.lat.toFixed(5) + '<br>' +
+        'Lng: ' + e.latlng.lng.toFixed(5) +
+        '<br><br><a href="#" onclick="removerPonto(' + pontos.length + '); return false;" style="color:red;font-size:12px;">🗑 Remover</a>'
+      );
+
+      pontos.push({
+        tipo: modoAtivo,
+        label: label,
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+        marker: marker
+      });
+
+      document.getElementById('btn-baixar').style.display = 'block';
+
+      // desativa modo após adicionar
+      modoAtivo = null;
+      document.body.classList.remove('modo-ativo');
+      document.getElementById('msg-modo').style.display = 'none';
+      document.getElementById('btn-dengue').classList.remove('ativo');
+      document.getElementById('btn-enchente').classList.remove('ativo');
+    });
+
+    window.removerPonto = function(idx) {
+      if (pontos[idx]) {
+        pontos[idx].marker.remove();
+        pontos[idx] = null;
+      }
+      var restantes = pontos.filter(function(p) { return p !== null; });
+      if (restantes.length === 0) {
+        document.getElementById('btn-baixar').style.display = 'none';
+      }
+    };
+
+    window.baixarGeoJSON = function() {
+      var features = pontos
+        .filter(function(p) { return p !== null; })
+        .map(function(p) {
+          return {
+            type: 'Feature',
+            properties: { tipo: p.tipo, nome: p.label },
+            geometry: { type: 'Point', coordinates: [p.lng, p.lat] }
+          };
+        });
+
+      var geojson = JSON.stringify({ type: 'FeatureCollection', features: features }, null, 2);
+      var blob = new Blob([geojson], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'registros_de_risco.geojson';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  init();
+})();
+</script>
     </body>
 </html>
