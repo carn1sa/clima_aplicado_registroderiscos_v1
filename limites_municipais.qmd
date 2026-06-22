@@ -1,0 +1,59 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.40.15-Bratislava">
+  <identifier></identifier>
+  <parentidentifier></parentidentifier>
+  <language>PT/BR</language>
+  <type>dataset</type>
+  <title>Municípios do Estado do Paraná - Ano 2025</title>
+  <abstract>Divisão Político-Administrativa do Estado do Paraná, através da representação vetorial das linhas definidoras das divisas municipais e estaduais até abril de 2025</abstract>
+  <keywords vocabulary="">
+    <keyword>Municípios; limites administrativos; ordenamento territorial; Paraná</keyword>
+  </keywords>
+  <keywords vocabulary="gmd:topicCategory">
+    <keyword>Limites e Localidades (LML)</keyword>
+  </keywords>
+  <contact>
+    <name>Leticia Nunes da Costa</name>
+    <organization>LAGEAMB-UFPR</organization>
+    <position></position>
+    <voice></voice>
+    <fax></fax>
+    <email>leticianunes@ufpr.br</email>
+    <role>Ponto de contato</role>
+  </contact>
+  <links>
+    <link size="" type="" mimeType="" url="https://www.iat.pr.gov.br/Pagina/Dados-geoespaciais-de-referencia" format="" description="Link para baixa o arquivo" name="Não definido 1"/>
+    <link size="" type="" mimeType="" url="iat.pr.gov.br/sites/agua-terra/arquivos_restritos/files/documento/2025-05/relatorio_de_calculo_de_area_dos_municipios_do_estado_do_parana_2025.pdf" format="" description="Link do relatório de atualização" name="Não definido 2"/>
+  </links>
+  <history>O arquivo foi obtido diretamente no site do Instituto Água e Terra (IAT), por meio do link: https://www.iat.pr.gov.br/Pagina/Dados-geoespaciais-de-referencia, sem que tenha sido realizada qualquer modificação em seu conteúdo. O arquivo foi baixado originalmente no formato shapefile, e posteriormente exportado para o formato geopackage, usando o QGIS. Em razão de atualizações efetuadas pelo órgão responsável no ano de 2025, esse arquivo substituiu a versão anteriormente presente na BSDG Litoral, mas que pode ser encontrada nos backups. O arquivo espacial é acompanhado de um relatório em PDF, que pode ser encontrado no seguinte link: https://www.iat.pr.gov.br/sites/agua-terra/arquivos_restritos/files/documento/2025-05/relatorio_de_calculo_de_area_dos_municipios_do_estado_do_parana_2025.pdf , e apresenta as seguintes informações de como foi elaborado:
+
+“O mapa de divisas municipais que serviu de base para o cálculo das áreas dos municípios paranaenses, ano 2025, retrata a situação vigente da Divisão Político-Administrativa do Estado do Paraná, através da representação vetorial das linhas definidoras das divisas municipais e estaduais até abril de 2025. A sua elaboração utilizou como fonte de referência e consulta o Arquivo Gráfico Municipal – AGM constituído por diversos documentos cartográficos e legais. As bases cartográficas utilizadas foram do Mapeamento Sistemático do Estado na escala 1:50.000, originalmente no Datum Horizontal SAD 69 e na projeção UTM (fusos 21 e 22). O arquivo vetorial foi transformado do Datum SAD 69 para o Datum SIRGAS 2000. Para o cálculo das áreas utilizou-se o sistema de projeção cilíndrica equivalente, a qual tem como característica a manutenção das áreas – coeficiente de deformação de área nulo. Os parâmetros utilizados são os seguintes: Projeção Cilíndrica Equivalente; Datum SIRGAS 2000; Meridiano central -51° 30’; Paralelo padrão -24° 45’; Unidade de medida metros. O arquivo utilizado para o cálculo de áreas é o denominado de municipios_2025_cil no formato shapefile. A nomenclatura numérica adotada é a vigente no Brasil, com separação decimal por vírgulas. Alterações de área dos municípios decorrem de revisão e consequentes correções e ajustes das divisas. A revisão das divisas municipais é um processo que ocorre constantemente, sob demanda das prefeituras, do IBGE ou em função da melhoria da base cartográfica. Assim, recomenda-se que na necessidade de uma definição mais precisa da divisa, a Divisão de Limites Municipais da Diretoria de Gestão Territorial do IAT seja formalmente consultada. Os municípios destacados com asterisco foram os que sofreram alguma alteração no cálculo de área de 2024 para 2025”.</history>
+  <history>Data de aquiseição:27/01/2026</history>
+  <history>Data dos metadados: 27/01/2026</history>
+  <dates/>
+  <fees></fees>
+  <constraints type="Não definido 1">Sem restrições</constraints>
+  <encoding></encoding>
+  <crs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt>GEOGCRS["SIRGAS 2000",DATUM["Sistema de Referencia Geocentrico para las AmericaS 2000",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Latin America - Central America and South America - onshore and offshore. Brazil - onshore and offshore."],BBOX[-59.87,-122.19,32.72,-25.28]],ID["EPSG",4674]]</wkt>
+      <proj4>+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs</proj4>
+      <srsid>3517</srsid>
+      <srid>4674</srid>
+      <authid>EPSG:4674</authid>
+      <description>SIRGAS 2000</description>
+      <projectionacronym>longlat</projectionacronym>
+      <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+      <geographicflag>true</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial dimensions="2" minx="179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368" minz="0" maxy="-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368" crs="EPSG:4674" miny="179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368" maxz="0" maxx="-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368"/>
+    <temporal>
+      <period>
+        <start></start>
+        <end></end>
+      </period>
+    </temporal>
+  </extent>
+</qgis>
