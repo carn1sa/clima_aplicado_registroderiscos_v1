@@ -82,9 +82,9 @@
         display: block;
       }
     </style>
-    <div id="map-title">Registros de Riscos</div>
 </head>
     <body>
+    <div id="map-title">Registros de Riscos</div>
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -4155,9 +4155,13 @@
   // aguarda o mapa Leaflet estar disponível
   function init() {
     // tenta pegar o mapa Leaflet (qgis2web expõe como variável global 'map')
+    if (typeof L === 'undefined') {
+      setTimeout(init, 300);
+      return;
+    }
     var m = window.map;
     if (!m) {
-      setTimeout(init, 500);
+      setTimeout(init, 300);
       return;
     }
 
